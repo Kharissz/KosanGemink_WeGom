@@ -4,27 +4,29 @@ using UnityEngine;
 
 public class ObjectHold : MonoBehaviour
 {
-    public GameObject Object;
+
+    private GameObject Object;
+    private Collider coll;
     public Transform PlayerTransform;
     public float range = 2f;
     // public float Go = 100f;
     public Camera Camera;
-    public bool isHolding =false;
+    public bool isHolding = false;
 
 
     void Start()
     {
-        
+
     }
 
     void Update()
     {
 
-        if(Input.GetKeyDown(KeyCode.F))
+        if(Input.GetKeyDown(KeyCode.E) && !isHolding)
         {
             StartPickUp();
         }
-        if (Input.GetKeyDown(KeyCode.E) && isHolding)
+        if (Input.GetKeyDown(KeyCode.Q) && isHolding)
         Drop();
         
     }
@@ -36,30 +38,31 @@ public class ObjectHold : MonoBehaviour
         if (Physics.Raycast(Camera.transform.position, Camera.transform.forward, out hit, range))
         {
             Debug.Log(hit.transform.name);
+            if (hit.transform.tag == "sampah")
+            {
+                Object = hit.transform.gameObject;
+                coll = Object.GetComponent<Collider>();
 
-            PickUp();
-            isHolding = true;
+                PickUp();
+            }
 
         }
-
-        // if(Input.GetKeyDown(KeyCode.E) && isHolding)
-        // {
-        //     isHolding = true;
-        //     Drop();
-        // }
     }
 
     void PickUp ()
     {
-        // Gun.GetComponent<Rigidbody>().isKinematic = true;
+
         Object.transform.SetParent(PlayerTransform);
+        coll.enabled = false;    
+        
+        isHolding = true;
     }
 
     void Drop ()
     {
-        isHolding = false;
+        coll.enabled = true;
         PlayerTransform.DetachChildren();
-        // Gun.GetComponent<Rigidbody>().isKinematic = false;
+        isHolding = false;
     }
     
 }
