@@ -12,6 +12,7 @@ public class ObjectHold : MonoBehaviour
     // public float Go = 100f;
     public Camera Camera;
     public bool isHolding = false;
+    public RaycastHit hit;
 
 
     void Start()
@@ -33,8 +34,6 @@ public class ObjectHold : MonoBehaviour
 
     void StartPickUp ()
     {
-
-        RaycastHit hit;
         if (Physics.Raycast(Camera.transform.position, Camera.transform.forward, out hit, range))
         {
             Debug.Log(hit.transform.name);
@@ -52,6 +51,7 @@ public class ObjectHold : MonoBehaviour
     void PickUp ()
     {
 
+        Object.transform.position = PlayerTransform.position;
         Object.transform.SetParent(PlayerTransform);
         coll.enabled = false;    
         

@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
 
     bool isGrounded;
-    bool isMoving;
+    // bool isMoving;
 
     private Vector3 lastposition = new Vector3(0f,0f,0f);
     // Start is called before the first frame update
@@ -68,19 +68,18 @@ public class PlayerMovement : MonoBehaviour
         // Executing the Jump
         controller.Move(velocity * Time.deltaTime);
 
-        if(lastposition != gameObject.transform.position && isGrounded)
-        {
-            isMoving = true;
-        }
-        else
-        {
-            isMoving = false;
-        }
-
-        lastposition = gameObject.transform.position;
+        // if(lastposition != gameObject.transform.position && isGrounded)
+        // {
+        //     isMoving = true;
+        // }
+        // else
+        // {
+        //     isMoving = false;
+        // }
+        // lastposition = gameObject.transform.position;
     }
 
-        void OnDrawGizmosSelected()
+    void OnDrawGizmosSelected()
     {
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.yellow;
