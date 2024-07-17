@@ -53,16 +53,22 @@ public class ObjectHold : MonoBehaviour
 
         Object.transform.position = PlayerTransform.position;
         Object.transform.SetParent(PlayerTransform);
-        coll.enabled = false;    
+        // coll.enabled = false; 
         
         isHolding = true;
     }
 
     void Drop ()
     {
-        coll.enabled = true;
+        // coll.enabled = true;
         PlayerTransform.DetachChildren();
         isHolding = false;
     }
+
+    // void OnTriggerEnter(Collider col)
+    // {
+    //     if(col.CompareTag("sampah"))
+    //     {Debug.Log("Menyentuh" + col.name);}
+    // }
     
 }
