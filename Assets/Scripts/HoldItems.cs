@@ -24,11 +24,9 @@ public class ObjectHold : MonoBehaviour
     {
 
         if(Input.GetKeyDown(KeyCode.E) && !isHolding)
-        {
-            StartPickUp();
-        }
+        {StartPickUp();}
         if (Input.GetKeyDown(KeyCode.Q) && isHolding)
-        Drop();
+        {Drop();}
         
     }
 
@@ -36,8 +34,15 @@ public class ObjectHold : MonoBehaviour
     {
         if (Physics.Raycast(Camera.transform.position, Camera.transform.forward, out hit, range))
         {
-            Debug.Log(hit.transform.name);
+            // Debug.Log(hit.transform.name);
             if (hit.transform.tag == "sampah")
+            {
+                Object = hit.transform.gameObject;
+                coll = Object.GetComponent<Collider>();
+
+                PickUp();
+            }
+            else if (hit.transform.tag == "alat")
             {
                 Object = hit.transform.gameObject;
                 coll = Object.GetComponent<Collider>();
@@ -58,7 +63,7 @@ public class ObjectHold : MonoBehaviour
         isHolding = true;
     }
 
-    void Drop ()
+    public void Drop ()
     {
         // coll.enabled = true;
         PlayerTransform.DetachChildren();

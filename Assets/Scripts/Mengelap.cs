@@ -1,48 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class Menyapu : MonoBehaviour
+public class Mengelap : MonoBehaviour
 {
-    public Membersihkan cleaning;
     private Animator anim;
+    public Membersihkan cleaning;
     [SerializeField] private float jumlah;
     public float dibersihkan;
-    public bool pegangSapu = false;
-    public bool beresSapu = false;
+    public bool pegangLap = false;
+    public bool beresLap = false;
     public bool sekali = false;
-    bool nyapu = false;
-
+    bool ngelap;
     // Start is called before the first frame update
     void Start()
     {
-        anim = GetComponent<Animator>();       
+        anim = GetComponent<Animator>();        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(pegangSapu)
+        if(pegangLap)
         {
             if(Input.GetKey(KeyCode.E) && cleaning.script.debu)
-            {nyapu = true;}
+            {ngelap = true;}
             else
-            {nyapu = false;}
+            {ngelap = false;}
             Animasi();
         }
 
         if(jumlah == dibersihkan)
         {
-            Debug.Log("Beres Menyapu");
-            beresSapu=true;
+            Debug.Log("Beres Mengelap");
+            beresLap=true;
         }
 
     }
 
     void Animasi()
     {
-        anim.SetBool("Menyapu", nyapu);
+        anim.SetBool("Mengelap", ngelap);
     }
-    
 }

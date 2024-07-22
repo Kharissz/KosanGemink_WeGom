@@ -8,7 +8,8 @@ public class Raycasting : MonoBehaviour
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private float rayLength = 20f;
     public new Camera camera;
-    RaycastHit hitInfo;
+    public RaycastHit hitInfo;
+    public bool debu = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,12 +21,17 @@ public class Raycasting : MonoBehaviour
     void Update()
     {
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        debu = false;
 
        if (Physics.Raycast(ray, out hitInfo, rayLength, layerMask))
        {
             // Debug.Log("Hit " + hitInfo.collider);
             // Debug.DrawRay(rayPoint.position,transform.TransformDirection(Vector3.forward) * hitInfo.distance, Color.green);
             Debug.DrawRay(ray.origin, ray.direction * rayLength, Color.yellow);
+            Debug.Log(hitInfo.transform.name);
+            if(hitInfo.transform.tag == "debuSapu" || hitInfo.transform.tag == "debuLap")
+            {debu = true;}
+
        }
        else 
        {

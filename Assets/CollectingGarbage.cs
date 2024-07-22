@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CollectingGarbage : MonoBehaviour
 {
-    [SerializeField] private GameObject sampah;
+    private GameObject sampah;
     public float jumlahSampah;
     public float sampahSekarang = 0;
     bool masuk = false;
