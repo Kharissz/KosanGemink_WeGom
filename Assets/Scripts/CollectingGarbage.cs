@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CollectingGarbage : MonoBehaviour
 {
+    public TaskManager taskManager;
     private GameObject sampah;
     public float jumlahSampah;
     public float sampahSekarang = 0;
@@ -13,7 +14,7 @@ public class CollectingGarbage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -23,6 +24,7 @@ public class CollectingGarbage : MonoBehaviour
         if(sampahSekarang == jumlahSampah)
         {
             Debug.Log("Sampah sudah penuh");
+            taskManager.NextTask();
             this.enabled = false;
         }        
     }

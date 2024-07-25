@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Membersihkan : MonoBehaviour
 {
+    public TaskManager taskManager;
     public Raycasting script;
     public ObjectHold hold;
     public Menyapu sapu;
@@ -13,7 +14,7 @@ public class Membersihkan : MonoBehaviour
     bool eKeyPressed;
     float keyPressedTime;
 
-    bool dekat = false;
+    // bool dekat = false;
     [SerializeField] bool pegang = false;
     public bool bersihkan = false;
 
@@ -39,6 +40,9 @@ public class Membersihkan : MonoBehaviour
             sapu.sekali = true;
             sapu.pegangSapu = false;
             sapu.gameObject.SetActive(false);
+
+            taskManager.NextTask();
+            lap.col.enabled=true;
         }
 
         // Jika Selesai Mengelap
@@ -63,16 +67,19 @@ public class Membersihkan : MonoBehaviour
     void Bersihkan()
     {
         // Saat tombol 'e' ditekan
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && script.debu)
         {
             eKeyPressed = true;
             keyPressedTime = Time.time;
+            hold.PlayerTransform.DetachChildren();
+            hold.Object.transform.position =  new Vector3(script.hitInfo.transform.position.x, script.hitInfo.transform.position.y + 1.5f,script.hitInfo.transform.position.z); 
         }
 
         // Saat tombol 'e' masih ditekan
         if (eKeyPressed && Input.GetKey(KeyCode.E) && script.debu)
         {
             bersihkan = true;
+
 
             // Hitung berapa lama tombol 'e' telah ditekan
             elapsedTime = Time.time - keyPressedTime;
@@ -97,12 +104,15 @@ public class Membersihkan : MonoBehaviour
         }
 
         // Saat tombol 'e' dilepas
-        if (Input.GetKeyUp(KeyCode.E))
+        if (Input.GetKeyUp(KeyCode.E) && hold.Object!=null)
         {
             eKeyPressed = false;
             bersihkan = false;
             keyPressedTime = 0f;
             elapsedTime = 0f;
+
+            hold.Object.transform.position =  hold.PlayerTransform.position;
+            hold.Object.transform.SetParent(hold.PlayerTransform);
         }
     }
 
@@ -110,16 +120,21 @@ public class Membersihkan : MonoBehaviour
     {
         if(!pegang)
         {
-            if(dekat && Input.GetKeyDown(KeyCode.E) && script.hitInfo.transform.name == "Lap")
+            if(script.hitInfo.transform != null)
             {
-                pegang = true;
-                lap.pegangLap = true;
+                if(Input.GetKeyDown(KeyCode.E) && script.hitInfo.transform.name == "Lap")
+                {
+                    pegang = true;
+                    lap.pegangLap = true;
+                }
+
+                if(Input.GetKeyDown(KeyCode.E) && script.hitInfo.transform.name == "Sapu")
+                {
+                    pegang = true;
+                    sapu.pegangSapu = true;
+                }
             }
-            if(dekat && Input.GetKeyDown(KeyCode.E) && script.hitInfo.transform.name == "Sapu")
-            {
-                pegang = true;
-                sapu.pegangSapu = true;
-            }
+
         }
 
     }
@@ -131,7 +146,7 @@ public class Membersihkan : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.Q))
             {
                 pegang = false;
-                dekat = false;
+                // dekat = false;
                 sapu.pegangSapu = false;
                 lap.pegangLap = false;
             }    
@@ -141,17 +156,17 @@ public class Membersihkan : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if(col.CompareTag("alat"))
-        {
-            dekat =true;
-        }
+        // if(col.CompareTag("alat"))
+        // {
+        //     dekat =true;
+        // }
     }
 
     void OnTriggerExit(Collider col)
     {
-        if(col.CompareTag("alat"))
-        {
-            dekat = false;
-        }
+        // if(col.CompareTag("alat"))
+        // {
+        //     dekat = false;
+        // }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObjectHold : MonoBehaviour
 {
 
-    private GameObject Object;
+    public GameObject Object;
     private Collider coll;
     public Transform PlayerTransform;
     public float range = 2f;
@@ -58,7 +58,7 @@ public class ObjectHold : MonoBehaviour
 
         Object.transform.position = PlayerTransform.position;
         Object.transform.SetParent(PlayerTransform);
-        // coll.enabled = false; 
+        // coll.enabled = false;
         
         isHolding = true;
     }

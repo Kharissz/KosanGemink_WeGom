@@ -4,22 +4,24 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Data;
+using UnityEngine.Events;
+
+
 
 public class Dialogue : MonoBehaviour
 {
+    public TaskManager taskManager;
     public GameObject box;
     public TextMeshProUGUI chara;
     public TextMeshProUGUI textComponent;
     // [SerializeField] private GameObject buttonUI;
     private GameObject player;
-    private Rigidbody control;
     public string nama;
-
     public string[] lines;
     public float textSpeed;
-    private bool comm;
     private bool dial;
     private int index;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,9 +29,9 @@ public class Dialogue : MonoBehaviour
         textComponent.text = string.Empty;
         
         player = GameObject.FindGameObjectWithTag("Player");
+
+        StartDialogue();
         // control = player.GetComponent<Rigidbody>();
-
-
     }
 
     // Update is called once per frame
@@ -69,15 +71,16 @@ public class Dialogue : MonoBehaviour
         // control.constraints = RigidbodyConstraints.None;
         StopCoroutine(TypeLine());
 
-
-        
+        if(taskManager!=null)
+        {
+            taskManager.StartTask();
+        }
    }
 
    void NextLine()
    {
         if(index < lines.Length -1 )
         {
-
             textComponent.text = string.Empty;
             StartCoroutine(TypeLine());
         } 
@@ -86,6 +89,11 @@ public class Dialogue : MonoBehaviour
             Debug.Log("Dialog Berakhir");
             EndDialogue();            
         }
+   }
+
+   void OnEnable()
+   {
+        // StartDialogue();
    }
 
    void OnTriggerEnter(Collider coll)

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Mengelap : MonoBehaviour
 {
+    public Collider col;
     private Animator anim;
     public Membersihkan cleaning;
     [SerializeField] private float jumlah;
@@ -15,7 +16,10 @@ public class Mengelap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        anim = GetComponent<Animator>();        
+        anim = GetComponent<Animator>();
+        col = GetComponent<Collider>();
+        col.enabled = false;
+
     }
 
     // Update is called once per frame
